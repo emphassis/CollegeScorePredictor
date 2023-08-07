@@ -1,0 +1,58 @@
+﻿@inject AppDbContext _db
+
+<div class="card">
+    <div class="card-header">
+        Set Conference Teams
+    </div>
+    <div class="card-body">
+        @if (ranCommand)
+        {
+            @if (!doTeamsExist)
+            {
+                <div>
+                    <label>Generating Teams should only happen once.</label>
+                    <button type="button" class="btn btn-primary" @onclick="@(async()=>{
+                    await GenerateTeams();
+                    })">
+                        Generate Teams
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div>Teams have already been generated.</div>
+            }
+        }
+        @if (teamsGeneratedSuccessfully)
+        {
+            <div>
+                Successfully generated teams in DB!
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private bool ranCommand;
+    private bool doTeamsExist;
+    private bool teamsGeneratedSuccessfully;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            doTeamsExist = await conferenceTeamsService.DoConferenceTeamsExistAsync();
+            ranCommand = true;
+            StateHasChanged();
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task GenerateTeams()
+    {
+        teamsGeneratedSuccessfully = await conferenceTeamsService.SetConferenceTeamsAsync();
+        doTeamsExist = true;
+        ranCommand = true;
+        StateHasChanged();
+    }
+}

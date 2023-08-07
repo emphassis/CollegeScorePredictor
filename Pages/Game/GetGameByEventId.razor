@@ -1,0 +1,55 @@
+﻿<div class="card">
+    <div class="card-header">
+        Get Game By Event Id
+    </div>
+    <div class="card-body">
+        <label>Get Game</label>
+        <div class="row">
+            <label>Event Id: </label>
+            <input type="text" placeholder="Write event id here..." @bind="eventId"/>
+        </div>
+        <button type="button" @onclick="@(async()=>{await GetGame();})">Submit</button>
+    </div>
+</div>
+@code {
+    private string eventId = string.Empty;
+    private async Task GetGame()
+    {
+        if (string.IsNullOrWhiteSpace(eventId)) eventId = "401405148";
+        var espn = httpClient.CreateClient("espn");
+        var response = await espn.GetAsync(Constants.System.EspnGameSummaryApi + eventId);
+        try
+        {
+            response.EnsureSuccessStatusCode();
+            var responseString = await response.Content.ReadAsStringAsync();
+            EspnGameSummaryModel? gameModel = JsonSerializer.Deserialize<EspnGameSummaryModel>(responseString);
+
+            if (gameModel != null)
+            {
+                Console.WriteLine("boxscore available");
+                Console.WriteLine(gameModel.header.competitions[0].boxscoreAvailable);
+                Console.WriteLine("win probability for home, first then last");
+                Console.WriteLine(gameModel.winprobability.First().homeWinPercentage);
+                Console.WriteLine(gameModel.winprobability[gameModel.winprobability.Count() - 1].homeWinPercentage);
+                Console.WriteLine();
+                Console.WriteLine(gameModel.boxscore.teams[0].team.displayName);
+                Console.WriteLine(gameModel.boxscore.teams[1].team.displayName);
+                Console.WriteLine();
+                Console.WriteLine(gameModel.boxscore.teams[0].team.id);
+                Console.WriteLine(gameModel.boxscore.teams[1].team.id);
+            }
+            else
+            {
+                Console.WriteLine("game model is null");
+            }
+        }
+        catch (Exception exception)
+        {
+            //log eeror or something
+            Console.WriteLine("error");
+            Console.WriteLine(exception.Message);
+            Console.WriteLine(exception.InnerException);
+            Console.WriteLine("error");
+        }
+    }
+}

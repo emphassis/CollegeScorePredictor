@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.8" />
+    <PackageReference Include="Microsoft.ML" Version="1.7.1" />
+    <PackageReference Include="Microsoft.ML.FastTree" Version="1.7.1" />
+    <PackageReference Include="Microsoft.ML.LightGbm" Version="1.7.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AIModels\OffensivePrediction\Models\Database\" />
+  </ItemGroup>
+  <ItemGroup Label="NoDefense">
+    <None Include="NoDefense.consumption.cs">
+      <DependentUpon>NoDefense.mbconfig</DependentUpon>
+    </None>
+    <None Include="NoDefense.training.cs">
+      <DependentUpon>NoDefense.mbconfig</DependentUpon>
+    </None>
+    <None Include="NoDefense.zip">
+      <DependentUpon>NoDefense.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="Balanced">
+    <None Include="Balanced.consumption.cs">
+      <DependentUpon>Balanced.mbconfig</DependentUpon>
+    </None>
+    <None Include="Balanced.training.cs">
+      <DependentUpon>Balanced.mbconfig</DependentUpon>
+    </None>
+    <None Include="Balanced.zip">
+      <DependentUpon>Balanced.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="WillTeamWin">
+    <None Include="WillTeamWin.consumption.cs">
+      <DependentUpon>WillTeamWin.mbconfig</DependentUpon>
+    </None>
+    <None Include="WillTeamWin.training.cs">
+      <DependentUpon>WillTeamWin.mbconfig</DependentUpon>
+    </None>
+    <None Include="WillTeamWin.zip">
+      <DependentUpon>WillTeamWin.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup Label="Minimal">
+    <None Include="Minimal.consumption.cs">
+      <DependentUpon>Minimal.mbconfig</DependentUpon>
+    </None>
+    <None Include="Minimal.training.cs">
+      <DependentUpon>Minimal.mbconfig</DependentUpon>
+    </None>
+    <None Include="Minimal.zip">
+      <DependentUpon>Minimal.mbconfig</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

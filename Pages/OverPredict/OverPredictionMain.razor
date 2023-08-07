@@ -1,0 +1,204 @@
+﻿<div class="card">
+    <div class="card-header">
+        Build Over Prediction Models By Year
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" @onclick="@(()=>{ getData = !getData; })">Get Data</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" @onclick="@(()=>{ predictGame = !predictGame; })">Predict Game</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" @onclick="@(()=>{ predictWeek = !predictWeek; })">Predict Week</button>
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" @onclick="@(()=>{ getPrediction = !getPrediction; })">Get Week Predictions</button>
+            </div>
+        </div>
+        @if (getData)
+        {
+            <label>Transform Data</label>
+            <div class="row">
+                <label>Year: </label>
+                <input type="number" placeholder="Write the year you want to transform in the database here..." @bind="yearString" />
+            </div>
+            @if (!running)
+            {
+                <button type="button" @onclick="@(async()=>{await StartSaving();})">Submit</button>
+            }
+            @if (running)
+            {
+                <div>@label</div>
+            }
+        }
+        @if (predictGame)
+        {
+            <div>
+                <label>Predict Game by Event Id</label>
+                <input type="text" placeholder="EventId..." @bind="eventId" />
+                <button type="button" @onclick="@(async()=>{await PredictSingleGame();})">Predict</button>
+            </div>
+        }
+        @if (predictWeek)
+        {
+            <div>
+                <label>Predict Games By Week Start YYYYMMDD</label>
+                <input type="text" placeholder="Week..." @bind="week" />
+                <button type="button" @onclick="@(async()=>{await PredictWeek();})">Predict</button>
+            </div>
+            
+        }
+        @if (getPrediction)
+        {
+            <div>
+                <label>Get Week Predictions</label>
+                <label>Week</label>
+                <input type="number" @bind="weekInt" />
+                <label>Year</label>
+                <input type="number" @bind="yearInt" />
+                <button type="button" @onclick="@(async()=>{await GetWeekPredictions();})">Get Predictions</button>
+            </div>
+        }
+        @if (showResults)
+        {
+            <OverPredictionResults gamePredictions="predictGames"></OverPredictionResults>
+        }
+
+    </div>
+</div>
+@code {
+    private string yearString = string.Empty;
+    private bool running = false;
+    private bool getData = false;
+    private bool predictGame = false;
+    private bool predictWeek = false;
+    private bool showResults = false;
+    private bool getPrediction = false;
+    private int weekInt;
+    private int yearInt;
+    private string label = "It's running, check the console.";
+    private string eventId = string.Empty;
+    private string week = string.Empty;
+
+    List<PredictGameResponseModel> predictGames = new List<PredictGameResponseModel>();
+
+    private async Task PredictSingleGame()
+    {
+        if (string.IsNullOrWhiteSpace(eventId)) eventId = "401405148";
+        var espn = httpClient.CreateClient("espn");
+        var response = await espn.GetAsync(Constants.System.EspnGameSummaryApi + eventId);
+        try
+        {
+            response.EnsureSuccessStatusCode();
+            var responseString = await response.Content.ReadAsStringAsync();
+            EspnGameSummaryModel? gameModel = JsonSerializer.Deserialize<EspnGameSummaryModel>(responseString);
+
+            if (gameModel != null)
+            {
+                PredictGameRequestModel requestModel = new PredictGameRequestModel
+                {
+                        HomeTeamId = long.Parse(gameModel.boxscore.teams.Last().team.id!),
+                        AwayTeamId = long.Parse(gameModel.boxscore.teams.First().team.id!),
+                        Week = gameModel.header.week,
+                        Year = gameModel.header.season.year,
+                        IsConference = gameModel.header.competitions.First().conferenceCompetition,
+                        IsNeutralSite = gameModel.header.competitions.First().neutralSite
+                };
+
+                var result = await overPredictionService.PredictGame(requestModel);
+                predictGames.Add(result);
+                showResults = true;
+                StateHasChanged();
+            }
+            else
+            {
+                Console.WriteLine("game model is null");
+            }
+        }
+        catch (Exception exception)
+        {
+            //log eeror or something
+            Console.WriteLine("error");
+            Console.WriteLine(exception.Message);
+            Console.WriteLine(exception.InnerException);
+            Console.WriteLine("error");
+        }
+    }
+
+    private async Task PredictWeek()
+    {
+        var games = await GetScoreboardOperations.GetWeekGamesAsync(week);
+        if (games == null) return;
+        foreach (var game in games.events)
+        {
+            eventId = game.id!;
+
+            if (string.IsNullOrWhiteSpace(eventId)) eventId = "401405148";
+
+            var espn = httpClient.CreateClient("espn");
+            var response = await espn.GetAsync(Constants.System.EspnGameSummaryApi + eventId);
+            try
+            {
+                response.EnsureSuccessStatusCode();
+                var responseString = await response.Content.ReadAsStringAsync();
+                EspnGameSummaryModel? gameModel = JsonSerializer.Deserialize<EspnGameSummaryModel>(responseString);
+
+                if (gameModel != null)
+                {
+                    PredictGameRequestModel requestModel = new PredictGameRequestModel
+                        {
+                            HomeTeamId = long.Parse(gameModel.boxscore.teams.Last().team.id!),
+                            AwayTeamId = long.Parse(gameModel.boxscore.teams.First().team.id!),
+                            Week = gameModel.header.week,
+                            Year = gameModel.header.season.year,
+                            IsConference = gameModel.header.competitions.First().conferenceCompetition,
+                            IsNeutralSite = gameModel.header.competitions.First().neutralSite
+                        };
+
+                    var result = await overPredictionService.PredictGame(requestModel);
+                    predictGames.Add(result);
+                    showResults = true;
+                    StateHasChanged();
+                }
+                else
+                {
+                    Console.WriteLine("game model is null");
+                }
+            }
+            catch (Exception exception)
+            {
+                //log eeror or something
+                Console.WriteLine("error");
+                Console.WriteLine(exception.Message);
+                Console.WriteLine(exception.InnerException);
+                Console.WriteLine("error");
+            }
+        }
+    }
+
+    private async Task GetWeekPredictions()
+    {
+        predictGames = await overPredictionService.GetWeekPredictions(weekInt, yearInt);
+        showResults = true;
+        StateHasChanged();
+    }
+
+    private async Task StartSaving()
+    {
+        if(yearString.Length != 4)
+        {
+            return;
+        }
+
+        var year = int.Parse(yearString);
+        running = true;
+        StateHasChanged();
+        //await generateSubModels.PopulateDatabaseWithOverPredictionData(year);
+        label = "Models have been generated.";
+        running = false;
+        StateHasChanged();
+
+    }
+}

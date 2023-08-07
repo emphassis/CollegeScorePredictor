@@ -1,0 +1,371 @@
+﻿CREATE TABLE [dbo].[OverPrediction]
+(
+	[OverPredictionId] BIGINT NOT NULL CONSTRAINT Pk_OverPredictionId PRIMARY KEY IDENTITY(10000,1),
+
+        [EventId] BIGINT NOT NULL,
+        [IsConference] BIT NOT NULL,
+        [IsNeutralSite] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+
+        [TeamId] BIGINT NOT NULL,
+        [TeamScore] FLOAT NOT NULL,
+        [TeamWon] BIT NOT NULL,
+        [TeamWins] INT NOT NULL DEFAULT 0,
+        [TeamLosses] INT NOT NULL DEFAULT 0,
+        [TeamConference] INT NOT NULL,
+        [TeamFirstDowns] FLOAT NOT NULL,
+        [TeamThirdDownConversions] FLOAT NOT NULL,
+        [TeamFourthDownConversions] FLOAT NOT NULL,
+        [TeamTotalYards] FLOAT NOT NULL,
+        [TeamNetPassingYards] FLOAT NOT NULL,
+        [TeamRushingYards] FLOAT NOT NULL,
+        [TeamTotalPenalties] FLOAT NOT NULL,
+        [TeamTotalPenaltyYards] FLOAT NOT NULL,
+        [TeamFumblesLost] FLOAT NOT NULL,
+        [TeamInterceptions] FLOAT NOT NULL,
+        [TeamPossessionTime] FLOAT NOT NULL,
+        [TeamPositivePlays] FLOAT NOT NULL,
+        [TeamNegativePlays] FLOAT NOT NULL,
+        
+        [OpponentId] BIGINT NOT NULL,
+        [OpponentWins] INT NOT NULL DEFAULT 0,
+        [OpponentLosses] INT NOT NULL DEFAULT 0,
+        [OpponentConference] INT NOT NULL,
+        [OpponentAverageFirstDownsAllowed] FLOAT NOT NULL,
+        [OpponentAverageThirdDownConversionsAllowed] FLOAT NOT NULL,
+        [OpponentAverageFourthDownConversionsAllowed] FLOAT NOT NULL,
+        [OpponentAverageTotalYardsAllowed] FLOAT NOT NULL,
+        [OpponentAveragePassingYardsAllowed] FLOAT NOT NULL,
+        [OpponentAverageRushingYardsAllowed] FLOAT NOT NULL,
+        [OpponentAverageTotalPenalties] FLOAT NOT NULL,
+        [OpponentAverageTotalPenaltyYards] FLOAT NOT NULL,
+        [OpponentAverageFumblesForced] FLOAT NOT NULL,
+        [OpponentAverageInterceptionsForced] FLOAT NOT NULL,
+        [OpponentAveragePossessionTime] FLOAT NOT NULL,
+        [OpponentAveragePositivePlays] FLOAT NOT NULL,
+        [OpponentAverageNegativePlays] FLOAT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_OverPrediction_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_OverPrediction_Search] ON [dbo].[OverPrediction] ([EventId], [Week], [Year]);
+GO
+
+
+CREATE TABLE [dbo].[FirstDownPrediction]
+(
+	[FirstDownPredictionId] BIGINT NOT NULL CONSTRAINT Pk_FirstDownPredictionId PRIMARY KEY IDENTITY(10000,1),
+
+        [TeamOneId] BIGINT NOT NULL,
+        [TeamOneFirstDowns] FLOAT NOT NULL,
+        [TeamOnePastFirstDowns] FLOAT NOT NULL,
+        [TeamTwoId] BIGINT NOT NULL,
+        [TeamTwoFirstDownsAllowed] FLOAT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_FirstDownPrediction_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_FirstDownPrediction_Search] ON [dbo].[FirstDownPrediction] ([TeamOneId], [TeamTwoId], [Week], [Year]);
+GO
+
+CREATE TABLE [dbo].[PassingYardsPrediction]
+(
+	[PassingYardsPredictionId] BIGINT NOT NULL CONSTRAINT Pk_PassingYardsPredictionId PRIMARY KEY IDENTITY(10000,1),
+
+        [TeamOneId] BIGINT NOT NULL,
+        [TeamOneNetPassingYards] FLOAT NOT NULL,
+        [TeamOnePassingAttempts] FLOAT NOT NULL,
+        [TeamOnePassingCompletions] FLOAT NOT NULL,
+        [TeamTwoId] BIGINT NOT NULL,
+        [TeamTwoOpponentPassingAttempts] FLOAT NOT NULL,
+        [TeamTwoOpponentPassingCompletions] FLOAT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_PassingYardsPrediction_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_PassingYardsPrediction_Search] ON [dbo].[PassingYardsPrediction] ([TeamOneId], [TeamTwoId], [Week], [Year]);
+GO
+
+
+CREATE TABLE [dbo].[YardsPerPassPrediction]
+(
+	[YardsPerPassPredictionId] BIGINT NOT NULL CONSTRAINT Pk_YardsPerPassPredictionId PRIMARY KEY IDENTITY(10000,1),
+
+        [TeamOneId] BIGINT NOT NULL,
+        [TeamOneYardsPerPass] FLOAT NOT NULL,
+        [TeamOneNetPassingYards] FLOAT NOT NULL,
+        [TeamOnePassingAttempts] FLOAT NOT NULL,
+        [TeamOnePassingCompletions] FLOAT NOT NULL,
+        [TeamTwoId] BIGINT NOT NULL,
+        [TeamTwoOpponentYardsPerPass] FLOAT NOT NULL,
+        [TeamTwoOpponentPassingAttempts] FLOAT NOT NULL,
+        [TeamTwoOpponentPassingCompletions] FLOAT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_YardsPerPassPrediction_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_YardsPerPassPrediction_Search] ON [dbo].[YardsPerPassPrediction] ([TeamOneId], [TeamTwoId], [Week], [Year]);
+GO
+
+
+CREATE TABLE [dbo].[RushingYardsPrediction]
+(
+	[RushingYardsPredictionId] BIGINT NOT NULL CONSTRAINT Pk_RushingYardsPredictionId PRIMARY KEY IDENTITY(10000,1),
+
+        [TeamOneId] BIGINT NOT NULL,
+        [TeamOneRushingYards] FLOAT NOT NULL,
+        [TeamOneRushingAttempts] FLOAT NOT NULL,
+        [TeamOneYardsPerRushAttempt] FLOAT NOT NULL,
+        [TeamTwoId] BIGINT NOT NULL,
+        [TeamTwoOpponentRushingAttempts] FLOAT NOT NULL,
+        [TeamTwoOpponentYardsPerRushAttempt] FLOAT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_RushingYardsPrediction_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_RushingYardsPrediction_Search] ON [dbo].[RushingYardsPrediction] ([TeamOneId], [TeamTwoId], [Week], [Year]);
+GO
+
+
+
+CREATE TABLE [dbo].[GamePrediction]
+(
+	[GamePredictionId] BIGINT NOT NULL CONSTRAINT Pk_GamePredictionId PRIMARY KEY IDENTITY(10000,1),
+
+        [HomeTeamId] BIGINT NOT NULL,
+        [AwayTeamId] BIGINT NOT NULL,
+        [HomeTeamName] NVARCHAR(200) NOT NULL,
+        [AwayTeamName] NVARCHAR(200) NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_GamePrediction_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_GamePrediction_Search] ON [dbo].[GamePrediction] ([HomeTeamId], [AwayTeamId], [Week], [Year]);
+GO
+
+
+CREATE TABLE [dbo].[ScorePrediction]
+(
+	[ScorePredictionId] BIGINT NOT NULL CONSTRAINT Pk_ScorePredictionId PRIMARY KEY IDENTITY(10000,1),
+	
+    [GamePredictionId] BIGINT NOT NULL,
+    [ModelName] NVARCHAR(200) NOT NULL,
+    [HomeTeamScore] INT NOT NULL,
+    [AwayTeamScore] INT NOT NULL,
+    [HomeTeamWins] FLOAT NOT NULL,
+    [AwayTeamWins] FLOAT NOT NULL,
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_ScorePrediction_Search] ON [dbo].[ScorePrediction] ([GamePredictionId]);
+GO
+
+
+
+CREATE TABLE [dbo].[Bet]
+(
+	[BetId] BIGINT NOT NULL CONSTRAINT Pk_BetId PRIMARY KEY IDENTITY(10000,1),
+    [GamePredictionId] BIGINT NOT NULL,
+        [HomeTeamId] BIGINT NOT NULL,
+        [AwayTeamId] BIGINT NOT NULL,
+        [BetType] INT NOT NULL,
+        [Bet] BIT NOT NULL,
+        [Variance] INT NOT NULL,
+        [Odd] FLOAT NOT NULL,
+        [PublicBetOver] BIT NOT NULL,
+        [PublicBetUnder] BIT NOT NULL,
+        [PublicBetAwayMoneyline] BIT NOT NULL,
+        [PublicBetHomeMoneyline] BIT NOT NULL,
+        [PublicBetAwaySpread] BIT NOT NULL,
+        [PublicBetHomeSpread] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_Bet_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_Bet_Search] ON [dbo].[Bet] ([Week], [Year], [BetType], [GamePredictionId], [Variance]);
+GO
+
+
+
+CREATE TABLE [dbo].[BetHistory]
+(
+    [BetId] BIGINT NOT NULL,
+    [Won] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_BetHistory_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_BetHistory_Search] ON [dbo].[BetHistory] ([Week], [Year], [BetId]);
+GO
+
+
+CREATE TABLE [dbo].[GamePredictionConference]
+(
+	[GamePredictionConferenceId] BIGINT NOT NULL CONSTRAINT Pk_GamePredictionConferenceId PRIMARY KEY IDENTITY(10000,1),
+
+        [HomeTeamId] BIGINT NOT NULL,
+        [AwayTeamId] BIGINT NOT NULL,
+        [HomeTeamName] NVARCHAR(200) NOT NULL,
+        [AwayTeamName] NVARCHAR(200) NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_GamePredictionConference_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_GamePredictionConference_Search] ON [dbo].[GamePredictionConference] ([HomeTeamId], [AwayTeamId], [Week], [Year]);
+GO
+
+
+CREATE TABLE [dbo].[ScorePredictionConference]
+(
+	[ScorePredictionConferenceId] BIGINT NOT NULL CONSTRAINT Pk_ScorePredictionConferenceId PRIMARY KEY IDENTITY(10000,1),
+	
+    [GamePredictionConferenceId] BIGINT NOT NULL,
+    [ModelName] NVARCHAR(200) NOT NULL,
+    [HomeTeamScore] INT NOT NULL,
+    [AwayTeamScore] INT NOT NULL,
+    [HomeTeamWins] BIT NOT NULL,
+    [AwayTeamWins] BIT NOT NULL,
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_ScorePredictionConference_Search] ON [dbo].[ScorePredictionConference] ([GamePredictionConferenceId]);
+GO
+
+
+
+CREATE TABLE [dbo].[BetConference]
+(
+	[BetConferenceId] BIGINT NOT NULL CONSTRAINT Pk_BetConferenceId PRIMARY KEY IDENTITY(10000,1),
+    [GamePredictionConferenceId] BIGINT NOT NULL,
+        [HomeTeamId] BIGINT NOT NULL,
+        [AwayTeamId] BIGINT NOT NULL,
+        [BetType] INT NOT NULL,
+        [Bet] BIT NOT NULL,
+        [Variance] INT NOT NULL,
+        [Odd] FLOAT NOT NULL,
+        [PublicBetOver] BIT NOT NULL,
+        [PublicBetUnder] BIT NOT NULL,
+        [PublicBetAwayMoneyline] BIT NOT NULL,
+        [PublicBetHomeMoneyline] BIT NOT NULL,
+        [PublicBetAwaySpread] BIT NOT NULL,
+        [PublicBetHomeSpread] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_BetConference_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_BetConference_Search] ON [dbo].[BetConference] ([Week], [Year], [BetType], [GamePredictionConferenceId], [Variance]);
+GO
+
+
+
+CREATE TABLE [dbo].[BetHistoryConference]
+(
+    [BetConferenceId] BIGINT NOT NULL,
+    [Won] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_BetHistoryConference_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_BetHistoryConference_Search] ON [dbo].[BetHistoryConference] ([Week], [Year], [BetConferenceId]);
+GO
+
+CREATE TABLE [dbo].[OverPredictionConference]
+(
+	[OverPredictionConferenceId] BIGINT NOT NULL CONSTRAINT Pk_OverPredictionConferenceId PRIMARY KEY IDENTITY(10000,1),
+
+        [EventId] BIGINT NOT NULL,
+        [IsConference] BIT NOT NULL,
+        [IsNeutralSite] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+
+        [TeamId] BIGINT NOT NULL,
+        [TeamScore] FLOAT NOT NULL,
+        [TeamWon] BIT NOT NULL,
+        [TeamWins] INT NOT NULL DEFAULT 0,
+        [TeamLosses] INT NOT NULL DEFAULT 0,
+        [TeamConference] INT NOT NULL,
+        [TeamFirstDowns] FLOAT NOT NULL,
+        [TeamThirdDownConversions] FLOAT NOT NULL,
+        [TeamFourthDownConversions] FLOAT NOT NULL,
+        [TeamTotalYards] FLOAT NOT NULL,
+        [TeamNetPassingYards] FLOAT NOT NULL,
+        [TeamRushingYards] FLOAT NOT NULL,
+        [TeamTotalPenalties] FLOAT NOT NULL,
+        [TeamTotalPenaltyYards] FLOAT NOT NULL,
+        [TeamFumblesLost] FLOAT NOT NULL,
+        [TeamInterceptions] FLOAT NOT NULL,
+        [TeamPossessionTime] FLOAT NOT NULL,
+        [TeamPositivePlays] FLOAT NOT NULL,
+        [TeamNegativePlays] FLOAT NOT NULL,
+        
+        [OpponentId] BIGINT NOT NULL,
+        [OpponentWins] INT NOT NULL DEFAULT 0,
+        [OpponentLosses] INT NOT NULL DEFAULT 0,
+        [OpponentConference] INT NOT NULL,
+        [OpponentAverageFirstDownsAllowed] FLOAT NOT NULL,
+        [OpponentAverageThirdDownConversionsAllowed] FLOAT NOT NULL,
+        [OpponentAverageFourthDownConversionsAllowed] FLOAT NOT NULL,
+        [OpponentAverageTotalYardsAllowed] FLOAT NOT NULL,
+        [OpponentAveragePassingYardsAllowed] FLOAT NOT NULL,
+        [OpponentAverageRushingYardsAllowed] FLOAT NOT NULL,
+        [OpponentAverageTotalPenalties] FLOAT NOT NULL,
+        [OpponentAverageTotalPenaltyYards] FLOAT NOT NULL,
+        [OpponentAverageFumblesForced] FLOAT NOT NULL,
+        [OpponentAverageInterceptionsForced] FLOAT NOT NULL,
+        [OpponentAveragePossessionTime] FLOAT NOT NULL,
+        [OpponentAveragePositivePlays] FLOAT NOT NULL,
+        [OpponentAverageNegativePlays] FLOAT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_OverPredictionConference_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_OverPredictionConference_Search] ON [dbo].[OverPredictionConference] ([EventId], [Week], [Year]);
+GO
+
+
+
+CREATE TABLE [dbo].[CombinedBet]
+(
+	[CombinedBetId] BIGINT NOT NULL CONSTRAINT Pk_CombinedBetId PRIMARY KEY IDENTITY(10000,1),
+    [GamePredictionId] BIGINT NOT NULL,
+        [HomeTeamId] BIGINT NOT NULL,
+        [AwayTeamId] BIGINT NOT NULL,
+        [BetType] INT NOT NULL,
+        [Bet] BIT NOT NULL,
+        [Variance] INT NOT NULL,
+        [Odd] FLOAT NOT NULL,
+        [PublicBetOver] BIT NOT NULL,
+        [PublicBetUnder] BIT NOT NULL,
+        [PublicBetAwayMoneyline] BIT NOT NULL,
+        [PublicBetHomeMoneyline] BIT NOT NULL,
+        [PublicBetAwaySpread] BIT NOT NULL,
+        [PublicBetHomeSpread] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_CombinedBet_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_CombinedBet_Search] ON [dbo].[CombinedBet] ([Week], [Year], [BetType], [GamePredictionId], [Variance]);
+GO
+
+
+
+CREATE TABLE [dbo].[CombinedBetHistory]
+(
+    [CombinedBetId] BIGINT NOT NULL,
+    [Won] BIT NOT NULL,
+        [Week] INT NOT NULL,
+        [Year] INT NOT NULL,
+	[CreatedDate] DATETIME2 NOT NULL CONSTRAINT DF_CombinedBetHistory_CreatedDate DEFAULT SYSUTCDATETIME()
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_CombinedBetHistory_Search] ON [dbo].[CombinedBetHistory] ([Week], [Year], [BetId]);
+GO

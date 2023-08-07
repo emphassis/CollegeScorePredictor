@@ -1,0 +1,113 @@
+﻿@using CollegeScorePredictor.Models;
+@using CollegeScorePredictor.Models.Bet;
+
+<div class="card">
+    <div class="card-header">
+        Get Weekly Bets
+    </div>
+    <div class="card-body">
+        <div class="col-3">
+            <div class="form-group">
+                <label>Week: </label>
+                <input type="number" placeholder="Week..." @bind="week" />
+            </div>
+            <div class="form-group">
+                <label>Year: </label>
+                <input type="number" placeholder="Year..." @bind="year" />
+            </div>
+            <div class="form-group">
+                <label>Only Show Won Bets: </label>
+                <input type="checkbox" @bind="wonBet" />
+            </div>
+            <div class="form-group">
+                <label>Only Show Qualified Bets: </label>
+                <input type="checkbox" @bind="onlyQualified" />
+            </div>
+        </div>
+@*        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(async ()=>{ await CreateBets(); })">Create Bet History</button>
+        </div>*@
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(async ()=>{ await GetBets(); })">Get Bet History</button>
+        </div>
+    </div>
+</div>
+@if (showBets)
+{
+    <div class="card mt-3">
+        <div class="card-header">
+            <div>Bet Results</div>
+        </div>
+        <div class="card-body p-2">
+            @if (bets != null)
+            {
+                <div class="row">
+                    <div class="col-md-4">Profit: @bets.Profit</div>
+                    <div class="col-md-4">Bets Won: @bets.BetsWon</div>
+                    <div class="col-md-4">Bets Lost: @bets.BetsLost</div>
+                </div>
+                <table class="table table-striped table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Bet Id</th>
+                            <th scope="col">Won</th>
+                            <th scope="col">Home Team</th>
+                            <th scope="col">Away Team</th>
+                            <th scope="col">Bet Type</th>
+                            <th scope="col">Odd</th>
+                            <th scope="col">Variance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var bet in bets.BetHistory)
+                        {
+                            <tr>
+                                <td>@bet.BetId</td>
+                                <td>
+                                    @if (bet.Won)
+                                    {
+                                        <span><i class="fa-solid fa-check fa-lg"></i></span>
+                                    }
+                                </td>
+                                <td>@bet.HomeTeamName</td>
+                                <td>@bet.AwayTeamName</td>
+                                <td>@bet.BetTypeName</td>
+                                <td>@bet.Odd</td>
+                                <td>@bet.Variance</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+}
+@code {
+    public GetBetHistoryResponseModel? bets;
+    private bool showBets = false;
+    private int year;
+    private int week;
+    private bool wonBet = false;
+    private bool onlyQualified = true;
+    private bool ranCommand;
+    private bool runningCommand;
+
+    public async Task GetBets()
+    {
+        runningCommand = true;
+        bets = await betHistoryService.GetHistory(week, year, wonBet, onlyQualified);
+        showBets = true;
+        runningCommand = false;
+        ranCommand = true;
+        StateHasChanged();
+    }
+
+    public async Task CreateBets()
+    {
+        runningCommand = true;
+        await betHistoryService.CreateHistory(week, year);
+        runningCommand = false;
+        ranCommand = true;
+        StateHasChanged();
+    }
+}

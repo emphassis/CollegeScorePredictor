@@ -1,0 +1,14 @@
+﻿namespace CollegeScorePredictor.Models.Database
+{
+    public class GamePredictionDbo
+    {
+        public long GamePredictionId { get; set; }
+        public long HomeTeamId { get; set; }
+        public long AwayTeamId { get; set; }
+        public string HomeTeamName { get; set; } = string.Empty;
+        public string AwayTeamName { get; set; } = string.Empty;
+        public int Week { get; set; }
+        public int Year { get; set; }
+        public DateTime CreatedDate { get; set; }
+    }
+}

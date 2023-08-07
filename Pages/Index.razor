@@ -1,0 +1,140 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<div class="card mb-4 bg-dark p-2">
+    <div class="row mb-1">
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.SetConferenceTeams))">Set Conference Teams</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=>TogglePage(Page.RecordAllGames))">Record All Games</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(async ()=> await TestMethod())">Test Method</button>
+        </div>
+    </div>
+@*    <div class="row mb-1">
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.OverPrediction))">Over Prediction</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.ConferenceOverPrediction))">Over Prediction Conference</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.ConferenceBet))">Get Bets Conference</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.ConferenceBetHistory))">Get Bet History Conference</button>
+        </div>
+    </div>*@
+    <div class="row mb-1">
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.GetWeeklyBets))">Get Bets</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.GetBetHistory))">Get Bet History</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.CombinedHistory))">Get Combined Bet History</button>
+        </div>
+    </div>
+    <div class="row mb-1">
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.BothOverPrediction))">Over Prediction</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.BothBet))">Create Bets</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.BothBetHistory))">Create Bet History</button>
+        </div>
+    </div>
+</div>
+
+@if (pages.Any(x => x == Page.SetConferenceTeams))
+{
+    <CollegeScorePredictor.Pages.Conference.SetConferenceTeams></CollegeScorePredictor.Pages.Conference.SetConferenceTeams>
+}
+@if (pages.Any(x => x == Page.RecordAllGames))
+{
+    <CollegeScorePredictor.Pages.Record.RecordAllGames></CollegeScorePredictor.Pages.Record.RecordAllGames>
+}
+@if (pages.Any(x => x == Page.GetBetHistory))
+{
+    <CollegeScorePredictor.Pages.Bet.BetHistory></CollegeScorePredictor.Pages.Bet.BetHistory>
+}
+@if (pages.Any(x => x == Page.OverPrediction))
+{
+    <CollegeScorePredictor.Pages.OverPredict.OverPredictionMain></CollegeScorePredictor.Pages.OverPredict.OverPredictionMain>
+}
+@if (pages.Any(x => x == Page.GetWeeklyBets))
+{
+    <CollegeScorePredictor.Pages.Bet.Bet></CollegeScorePredictor.Pages.Bet.Bet>    
+}
+@if (pages.Any(x => x == Page.ConferenceOverPrediction))
+{
+    <CollegeScorePredictor.Pages.OverPredict.OverPredictionConference></CollegeScorePredictor.Pages.OverPredict.OverPredictionConference>
+}
+@if (pages.Any(x => x == Page.ConferenceBet))
+{
+    <CollegeScorePredictor.Pages.Bet.BetConference></CollegeScorePredictor.Pages.Bet.BetConference>
+}
+@if (pages.Any(x => x == Page.ConferenceBetHistory))
+{
+    <CollegeScorePredictor.Pages.Bet.BetHistoryConference></CollegeScorePredictor.Pages.Bet.BetHistoryConference>
+}
+@if (pages.Any(x => x == Page.CombinedHistory))
+{
+    <CollegeScorePredictor.Pages.Bet.BetHistoryCombined></CollegeScorePredictor.Pages.Bet.BetHistoryCombined>
+}
+@if (pages.Any(x => x == Page.BothOverPrediction))
+{
+   <CollegeScorePredictor.Pages.Both.BothOverPrediction></CollegeScorePredictor.Pages.Both.BothOverPrediction>
+}
+@if (pages.Any(x => x == Page.BothBet))
+{
+    <CollegeScorePredictor.Pages.Both.BothBet></CollegeScorePredictor.Pages.Both.BothBet>
+}
+@if (pages.Any(x => x == Page.BothBetHistory))
+{
+    <CollegeScorePredictor.Pages.Both.BothBetHistory></CollegeScorePredictor.Pages.Both.BothBetHistory>
+}
+
+
+@code{
+    private List<Page> pages = new List<Page>();
+
+    private enum Page
+    {
+        SetConferenceTeams,
+        RecordAllGames,
+        GetBetHistory,
+        OverPrediction,
+        GetWeeklyBets,
+        ConferenceOverPrediction,
+        ConferenceBet,
+        ConferenceBetHistory,
+        CombinedHistory,
+        BothOverPrediction,
+        BothBet,
+        BothBetHistory
+    }
+
+    private async Task TestMethod()
+    {
+        //await ActionNetworkApiOperations.GetTeamNames();
+    }
+
+    private void TogglePage(Page page)
+    {
+        if (pages.Any(x => x == page)) 
+        { 
+            pages.Remove(page); 
+        }
+        else
+        {
+            pages.Add(page);
+        }
+    }
+}

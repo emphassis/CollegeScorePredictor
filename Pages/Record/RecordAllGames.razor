@@ -1,0 +1,61 @@
+﻿<div class="card mt-3">
+    <div class="card-header">
+        <div>Record All Games</div>
+        <small>This populates the database for your model to work on. It should only be run once. And I'm thinking of going back to 2015 right now.</small>
+    </div>
+    <div class="card-body">
+        <div>
+            <label>Record one year of games here. Only do it once per year.</label>
+            @if (!runningCommand)
+            {
+                <button type="button" class="btn btn-primary" @onclick="@(async()=>{
+                    await RecordGames();
+                    })">
+                Record Games
+            </button>
+            }
+        </div>
+        @if (ranCommand)
+        {
+            <div class="mt-2">Command has successfully finished.</div>
+            <div>Make sure you change the year.</div>
+        }
+
+
+        <button type="button" class="btn btn-primary" @onclick="@(async()=>{
+                    await RecordConferences();
+                    })">
+            Record Conferences
+        </button>
+
+    </div>
+</div>
+@code {
+    //https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20221122-20221128&limit=150
+    private bool ranCommand;
+    private bool runningCommand;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task RecordGames()
+    {
+        runningCommand = true;
+        StateHasChanged();
+        await recordGamesService.RecordAllGames();
+        runningCommand = false;
+        ranCommand = true;
+        StateHasChanged();
+    }
+
+    private async Task RecordConferences()
+    {
+        await recordGamesService.AddConferenceTeamsToGames(2022);
+    }
+}

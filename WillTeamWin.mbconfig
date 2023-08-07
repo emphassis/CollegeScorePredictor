@@ -1,0 +1,1071 @@
+﻿{
+  "TrainingTime": 600,
+  "Scenario": "Regression",
+  "DataSource": {
+    "Type": "SQL",
+    "Version": 1,
+    "ColumnProperties": [
+      {
+        "ColumnName": "OffensiveModelId",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "EventId",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "IsConference",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Boolean",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "IsNeutralSite",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Boolean",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "Week",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "Year",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamId",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamScore",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamWon",
+        "ColumnPurpose": "Label",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamWins",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamLosses",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamConference",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamChanceToWin",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamFirstDowns",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamTotalYards",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamNetPassingYards",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamYardsPerPass",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamPassingAttempts",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamRushingYards",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamRushingAttempts",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamYardsPerRushAttempt",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamTotalPenalties",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamTotalPenaltyYards",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamFumblesLost",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamInterceptions",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamPossessionTime",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamPositivePlays",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamNegativePlays",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamDefensiveTacklesForLoss",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamDefensiveSacks",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamFieldGoals",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamDefensiveSafety",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamSpecialTeamsPoints",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamPointsPerPlay",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentTeamId",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentWins",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentLosses",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentConference",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": true,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentScore",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentFirstDownsAllowed",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentTotalYardsAllowed",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentPassingYardsAllowed",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentRushingYardsAllowed",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentYardsPerPassAllowed",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentYardsPerRushAttemptAllowed",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentTotalPenalties",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentTotalPenaltyYards",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentFumblesForced",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentInterceptionsForced",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentPossessionTime",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentPositivePlays",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentNegativePlays",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentDefensiveTacklesForLoss",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentDefensiveSacks",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentFieldGoalsAllowed",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentDefensiveSafety",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentSpecialTeamsPointsAllowed",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentPointsPerPlay",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "CreatedDate",
+        "ColumnPurpose": "Ignore",
+        "ColumnDataFormat": "DateTime",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "TeamTurnoverMargin",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      },
+      {
+        "ColumnName": "OpponentTurnoverMargin",
+        "ColumnPurpose": "Feature",
+        "ColumnDataFormat": "Single",
+        "IsCategorical": false,
+        "Type": "Column",
+        "Version": 2
+      }
+    ],
+    "ConnectionString": "Data Source=localhost;Initial Catalog=predictor;Integrated Security=True",
+    "CommandString": "SELECT CAST(OffensiveModelId as REAL), CAST(EventId as REAL), IsConference, IsNeutralSite, CAST(Week as REAL), CAST(Year as REAL), CAST(TeamId as REAL), CAST(TeamScore as REAL), CAST(TeamWon as REAL), CAST(TeamWins as REAL), CAST(TeamLosses as REAL), CAST(TeamConference as REAL), CAST(TeamChanceToWin as REAL), CAST(TeamFirstDowns as REAL), CAST(TeamTotalYards as REAL), CAST(TeamNetPassingYards as REAL), CAST(TeamYardsPerPass as REAL), CAST(TeamPassingAttempts as REAL), CAST(TeamRushingYards as REAL), CAST(TeamRushingAttempts as REAL), CAST(TeamYardsPerRushAttempt as REAL), CAST(TeamTotalPenalties as REAL), CAST(TeamTotalPenaltyYards as REAL), CAST(TeamFumblesLost as REAL), CAST(TeamInterceptions as REAL), CAST(TeamPossessionTime as REAL), CAST(TeamPositivePlays as REAL), CAST(TeamNegativePlays as REAL), CAST(TeamDefensiveTacklesForLoss as REAL), CAST(TeamDefensiveSacks as REAL), CAST(TeamFieldGoals as REAL), CAST(TeamDefensiveSafety as REAL), CAST(TeamSpecialTeamsPoints as REAL), CAST(TeamPointsPerPlay as REAL), CAST(OpponentTeamId as REAL), CAST(OpponentWins as REAL), CAST(OpponentLosses as REAL), CAST(OpponentConference as REAL), CAST(OpponentScore as REAL), CAST(OpponentFirstDownsAllowed as REAL), CAST(OpponentTotalYardsAllowed as REAL), CAST(OpponentPassingYardsAllowed as REAL), CAST(OpponentRushingYardsAllowed as REAL), CAST(OpponentYardsPerPassAllowed as REAL), CAST(OpponentYardsPerRushAttemptAllowed as REAL), CAST(OpponentTotalPenalties as REAL), CAST(OpponentTotalPenaltyYards as REAL), CAST(OpponentFumblesForced as REAL), CAST(OpponentInterceptionsForced as REAL), CAST(OpponentPossessionTime as REAL), CAST(OpponentPositivePlays as REAL), CAST(OpponentNegativePlays as REAL), CAST(OpponentDefensiveTacklesForLoss as REAL), CAST(OpponentDefensiveSacks as REAL), CAST(OpponentFieldGoalsAllowed as REAL), CAST(OpponentDefensiveSafety as REAL), CAST(OpponentSpecialTeamsPointsAllowed as REAL), CAST(OpponentPointsPerPlay as REAL), CreatedDate, CAST(TeamTurnoverMargin as REAL), CAST(OpponentTurnoverMargin as REAL) FROM [dbo].[OffensiveModel]",
+    "DatabaseName": "predictor",
+    "SelectedTableDbo": "dbo",
+    "TableName": "OffensiveModel"
+  },
+  "Environment": {
+    "Type": "LocalCPU",
+    "Version": 1
+  },
+  "RunHistory": {
+    "Version": 1,
+    "Type": "Result",
+    "Trials": [
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.68725160273662711,
+        "RuntimeInSeconds": 0.81800001859664917
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": -0.17918778566808613,
+        "RuntimeInSeconds": 0.31299999356269836
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": 0.15432871593344133,
+        "RuntimeInSeconds": 0.30300000309944153
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.69522376516461426,
+        "RuntimeInSeconds": 0.25699999928474426
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.56457646370388592,
+        "RuntimeInSeconds": 0.20100000500679016
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": -6.8316183912120465E-05,
+        "RuntimeInSeconds": 0.27599999308586121
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": 0.573703990414534,
+        "RuntimeInSeconds": 0.27599999308586121
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": 0.1434241252930829,
+        "RuntimeInSeconds": 0.35899999737739563
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.6893988018981998,
+        "RuntimeInSeconds": 0.29399999976158142
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": 0.67497964213087369,
+        "RuntimeInSeconds": 0.29399999976158142
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.57586149699787637,
+        "RuntimeInSeconds": 0.15399999916553497
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": -0.26618634250686179,
+        "RuntimeInSeconds": 0.14800000190734863
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": 0.77942720651857578,
+        "RuntimeInSeconds": 0.33199998736381531
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.68725160273662711,
+        "RuntimeInSeconds": 0.27300000190734863
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": -0.68983577745706848,
+        "RuntimeInSeconds": 0.31299999356269836
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": 0.2826490699720654,
+        "RuntimeInSeconds": 0.32600000500679016
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": -1.7876347764289591E-05,
+        "RuntimeInSeconds": 0.21600000560283661
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": 0.66425554958983035,
+        "RuntimeInSeconds": 0.34200000762939453
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.74613997685108369,
+        "RuntimeInSeconds": 0.15700000524520874
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": 0.49195542636110556,
+        "RuntimeInSeconds": 0.50999999046325684
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.68725160273662711,
+        "RuntimeInSeconds": 0.29300001263618469
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": 0.47462974841475747,
+        "RuntimeInSeconds": 0.35600000619888306
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": 0.59835736781891391,
+        "RuntimeInSeconds": 0.18400000035762787
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.73991341487054252,
+        "RuntimeInSeconds": 0.20399999618530273
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": -0.95935467440948563,
+        "RuntimeInSeconds": 0.29300001263618469
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": -0.00043427520542560494,
+        "RuntimeInSeconds": 0.17900000512599945
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.70618014517010264,
+        "RuntimeInSeconds": 0.40900000929832458
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": -0.71300560738630092,
+        "RuntimeInSeconds": 0.43200001120567322
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": 0.60819247975797874,
+        "RuntimeInSeconds": 0.18500000238418579
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.67160893853362491,
+        "RuntimeInSeconds": 0.15700000524520874
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": 0.78222703000146654,
+        "RuntimeInSeconds": 0.47900000214576721
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": -0.832701559733084,
+        "RuntimeInSeconds": 0.29199999570846558
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": 0.45219296600889425,
+        "RuntimeInSeconds": 0.21600000560283661
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.64451579096158418,
+        "RuntimeInSeconds": 0.32699999213218689
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": -0.3534780902852368,
+        "RuntimeInSeconds": 0.29600000381469727
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": 0.72503499959493267,
+        "RuntimeInSeconds": 0.41999998688697815
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.70752991919702191,
+        "RuntimeInSeconds": 0.15600000321865082
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": 0.48479608020162346,
+        "RuntimeInSeconds": 0.18299999833106995
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": -0.016710146985007279,
+        "RuntimeInSeconds": 0.33799999952316284
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.69691591360706973,
+        "RuntimeInSeconds": 1.2630000114440918
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": -0.80150084189320236,
+        "RuntimeInSeconds": 1.2200000286102295
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": -0.96243018260441726,
+        "RuntimeInSeconds": 0.46599999070167542
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.0053122601092621125,
+        "RuntimeInSeconds": 0.15700000524520874
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": -2.5243094983194276,
+        "RuntimeInSeconds": 0.38400000333786011
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": -0.46389746904860751,
+        "RuntimeInSeconds": 0.29300001263618469
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.6476441320384656,
+        "RuntimeInSeconds": 0.29300001263618469
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": -0.30168998069112551,
+        "RuntimeInSeconds": 0.21799999475479126
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeRegression",
+        "Score": 0.57504469476105569,
+        "RuntimeInSeconds": 0.26199999451637268
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastTreeTweedieRegression",
+        "Score": -0.86985271893867466,
+        "RuntimeInSeconds": 0.29600000381469727
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LightGbmRegression",
+        "Score": 0.71048360745842465,
+        "RuntimeInSeconds": 0.18799999356269836
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "LbfgsPoissonRegressionRegression",
+        "Score": -0.45782829084129362,
+        "RuntimeInSeconds": 0.27399998903274536
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "FastForestRegression",
+        "Score": 0.69533313776552008,
+        "RuntimeInSeconds": 1.718999981880188
+      },
+      {
+        "Version": 0,
+        "Type": "Trial",
+        "TrainerName": "SdcaRegression",
+        "Score": -0.00016650439949872364,
+        "RuntimeInSeconds": 0.22400000691413879
+      }
+    ],
+    "Pipeline": {
+      "parameter": {
+        "0": {
+          "OutputColumnNames": [
+            "IsConference",
+            "IsNeutralSite"
+          ],
+          "InputColumnNames": [
+            "IsConference",
+            "IsNeutralSite"
+          ]
+        },
+        "1": {
+          "OutputColumnNames": [
+            "TeamId",
+            "TeamWins",
+            "TeamLosses",
+            "TeamConference",
+            "TeamChanceToWin",
+            "TeamFirstDowns",
+            "TeamNetPassingYards",
+            "TeamYardsPerPass",
+            "TeamPassingAttempts",
+            "TeamRushingAttempts",
+            "TeamYardsPerRushAttempt",
+            "TeamTotalPenalties",
+            "TeamTotalPenaltyYards",
+            "TeamFumblesLost",
+            "TeamInterceptions",
+            "TeamPossessionTime",
+            "TeamPositivePlays",
+            "TeamNegativePlays",
+            "TeamDefensiveTacklesForLoss",
+            "TeamDefensiveSacks",
+            "TeamFieldGoals",
+            "TeamDefensiveSafety",
+            "TeamSpecialTeamsPoints",
+            "TeamPointsPerPlay",
+            "OpponentTeamId",
+            "OpponentWins",
+            "OpponentLosses",
+            "OpponentConference",
+            "OpponentFirstDownsAllowed",
+            "OpponentPassingYardsAllowed",
+            "OpponentYardsPerPassAllowed",
+            "OpponentYardsPerRushAttemptAllowed",
+            "OpponentTotalPenalties",
+            "OpponentTotalPenaltyYards",
+            "OpponentFumblesForced",
+            "OpponentInterceptionsForced",
+            "OpponentPossessionTime",
+            "OpponentPositivePlays",
+            "OpponentNegativePlays",
+            "OpponentDefensiveTacklesForLoss",
+            "OpponentDefensiveSacks",
+            "OpponentFieldGoalsAllowed",
+            "OpponentDefensiveSafety",
+            "OpponentSpecialTeamsPointsAllowed",
+            "OpponentPointsPerPlay",
+            "TeamTurnoverMargin",
+            "OpponentTurnoverMargin"
+          ],
+          "InputColumnNames": [
+            "TeamId",
+            "TeamWins",
+            "TeamLosses",
+            "TeamConference",
+            "TeamChanceToWin",
+            "TeamFirstDowns",
+            "TeamNetPassingYards",
+            "TeamYardsPerPass",
+            "TeamPassingAttempts",
+            "TeamRushingAttempts",
+            "TeamYardsPerRushAttempt",
+            "TeamTotalPenalties",
+            "TeamTotalPenaltyYards",
+            "TeamFumblesLost",
+            "TeamInterceptions",
+            "TeamPossessionTime",
+            "TeamPositivePlays",
+            "TeamNegativePlays",
+            "TeamDefensiveTacklesForLoss",
+            "TeamDefensiveSacks",
+            "TeamFieldGoals",
+            "TeamDefensiveSafety",
+            "TeamSpecialTeamsPoints",
+            "TeamPointsPerPlay",
+            "OpponentTeamId",
+            "OpponentWins",
+            "OpponentLosses",
+            "OpponentConference",
+            "OpponentFirstDownsAllowed",
+            "OpponentPassingYardsAllowed",
+            "OpponentYardsPerPassAllowed",
+            "OpponentYardsPerRushAttemptAllowed",
+            "OpponentTotalPenalties",
+            "OpponentTotalPenaltyYards",
+            "OpponentFumblesForced",
+            "OpponentInterceptionsForced",
+            "OpponentPossessionTime",
+            "OpponentPositivePlays",
+            "OpponentNegativePlays",
+            "OpponentDefensiveTacklesForLoss",
+            "OpponentDefensiveSacks",
+            "OpponentFieldGoalsAllowed",
+            "OpponentDefensiveSafety",
+            "OpponentSpecialTeamsPointsAllowed",
+            "OpponentPointsPerPlay",
+            "TeamTurnoverMargin",
+            "OpponentTurnoverMargin"
+          ]
+        },
+        "2": {
+          "InputColumnNames": [
+            "IsConference",
+            "IsNeutralSite",
+            "TeamId",
+            "TeamWins",
+            "TeamLosses",
+            "TeamConference",
+            "TeamChanceToWin",
+            "TeamFirstDowns",
+            "TeamNetPassingYards",
+            "TeamYardsPerPass",
+            "TeamPassingAttempts",
+            "TeamRushingAttempts",
+            "TeamYardsPerRushAttempt",
+            "TeamTotalPenalties",
+            "TeamTotalPenaltyYards",
+            "TeamFumblesLost",
+            "TeamInterceptions",
+            "TeamPossessionTime",
+            "TeamPositivePlays",
+            "TeamNegativePlays",
+            "TeamDefensiveTacklesForLoss",
+            "TeamDefensiveSacks",
+            "TeamFieldGoals",
+            "TeamDefensiveSafety",
+            "TeamSpecialTeamsPoints",
+            "TeamPointsPerPlay",
+            "OpponentTeamId",
+            "OpponentWins",
+            "OpponentLosses",
+            "OpponentConference",
+            "OpponentFirstDownsAllowed",
+            "OpponentPassingYardsAllowed",
+            "OpponentYardsPerPassAllowed",
+            "OpponentYardsPerRushAttemptAllowed",
+            "OpponentTotalPenalties",
+            "OpponentTotalPenaltyYards",
+            "OpponentFumblesForced",
+            "OpponentInterceptionsForced",
+            "OpponentPossessionTime",
+            "OpponentPositivePlays",
+            "OpponentNegativePlays",
+            "OpponentDefensiveTacklesForLoss",
+            "OpponentDefensiveSacks",
+            "OpponentFieldGoalsAllowed",
+            "OpponentDefensiveSafety",
+            "OpponentSpecialTeamsPointsAllowed",
+            "OpponentPointsPerPlay",
+            "TeamTurnoverMargin",
+            "OpponentTurnoverMargin"
+          ],
+          "OutputColumnName": "Features"
+        },
+        "3": {
+          "NumberOfLeaves": 13,
+          "MinimumExampleCountPerLeaf": 94,
+          "NumberOfTrees": 83,
+          "MaximumBinCountPerFeature": 83,
+          "FeatureFraction": 0.99999999,
+          "LearningRate": 0.047509060162475324,
+          "LabelColumnName": "TeamWon",
+          "FeatureColumnName": "Features"
+        }
+      },
+      "estimators": [
+        "OneHotEncoding",
+        "ReplaceMissingValues",
+        "Concatenate",
+        "FastTreeRegression"
+      ]
+    },
+    "MetricName": "RSquared"
+  },
+  "Type": "TrainingConfig",
+  "Version": 2
+}

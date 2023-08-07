@@ -1,0 +1,34 @@
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.JSInterop
+@using CollegeScorePredictor
+@using CollegeScorePredictor.Shared
+@using CollegeScorePredictor.Models.EspnGameSummary
+@using CollegeScorePredictor.Models.EspnTeams
+@using CollegeScorePredictor.Models.Database
+@using CollegeScorePredictor.Services
+@using CollegeScorePredictor.AIModels.OverPrediction
+@using CollegeScorePredictor.Operations
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+
+@inject IHttpClientFactory httpClient
+@inject ConferenceTeamsService conferenceTeamsService
+@inject RecordGamesService recordGamesService
+@inject GenerateSubModelService generateSubModels
+@inject PredictOverPredictionService overPredictionService
+@inject OverPredictionConferenceService overPredictionConferenceService
+@inject BetHistoryService betHistoryService
+@inject ActionBetService betService
+@inject ActionConferenceBetService betConferenceService
+@inject ConferenceBetHistoryService betHistoryConferenceService
+@inject BetHistoryCombinedService betHistoryCombinedService
+@inject BothWinHistoryService bothWinHistoryService
+@inject ActionCombinedBetService combinedBetService
+@inject CombinedBetHistoryService combinedBetHistoryService
