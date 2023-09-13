@@ -50,6 +50,17 @@
             <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.BothBetHistory))">Create Bet History</button>
         </div>
     </div>
+    <div class="row mb-1">
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.CreateWins))">Create Wins</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.GetWins))">Get Wins</button>
+        </div>
+         <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.GenerateBetSlip))">Generate Bet Slip</button>
+        </div>
+    </div>
 </div>
 
 @if (pages.Any(x => x == Page.SetConferenceTeams))
@@ -100,6 +111,18 @@
 {
     <CollegeScorePredictor.Pages.Both.BothBetHistory></CollegeScorePredictor.Pages.Both.BothBetHistory>
 }
+@if (pages.Any(x => x == Page.CreateWins))
+{
+    <CollegeScorePredictor.Pages.Wins.YearlyWin></CollegeScorePredictor.Pages.Wins.YearlyWin>
+}
+@if (pages.Any(x => x == Page.GetWins))
+{
+    <CollegeScorePredictor.Pages.Wins.YearlyWinResults></CollegeScorePredictor.Pages.Wins.YearlyWinResults>
+}
+@if (pages.Any(x => x == Page.GenerateBetSlip))
+{
+    <CollegeScorePredictor.Pages.Bet.BetSlipGenerator></CollegeScorePredictor.Pages.Bet.BetSlipGenerator>
+}
 
 
 @code{
@@ -118,7 +141,10 @@
         CombinedHistory,
         BothOverPrediction,
         BothBet,
-        BothBetHistory
+        BothBetHistory,
+        CreateWins,
+        GetWins,
+        GenerateBetSlip
     }
 
     private async Task TestMethod()

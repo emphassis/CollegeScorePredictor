@@ -58,6 +58,17 @@
             SunBeltConference
         }
 
+        public enum BetTypes : int
+        {
+            None = 0,
+            HomeSpread = 1,
+            AwaySpread = 2,
+            HomeMoneyLine = 3,
+            AwayMoneyLine = 4,
+            Over = 5,
+            Under = 6
+        }
+
         public static class TeamStatistics
         {
             public static readonly string FirstDowns = "firstDowns"; //17

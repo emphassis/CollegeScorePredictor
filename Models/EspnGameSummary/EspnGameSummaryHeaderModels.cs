@@ -42,7 +42,7 @@
         public int order { get; set; }
         public bool possession { get; set; }
         public object? record { get; set; }
-        public string? score { get; set; }
+        public object? score { get; set; }
         public object? team { get; set; }//hopefully don't need
         public string? uid { get; set; }
         public bool winner { get; set; }

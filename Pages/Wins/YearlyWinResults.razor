@@ -1,0 +1,82 @@
+﻿@using CollegeScorePredictor.Models;
+@using CollegeScorePredictor.Models.Win;
+
+<div class="card">
+    <div class="card-header">
+        Get Win Results
+    </div>
+    <div class="card-body">
+        <div class="col-3">
+            <div class="form-group">
+                <label>Year: </label>
+                <input type="number" placeholder="Year..." @bind="year" />
+            </div>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(async ()=>{ await GetWins(); })">Get Win History</button>
+        </div>
+    </div>
+</div>
+@if (showBets)
+{
+    <div class="card mt-3">
+        <div class="card-header">
+            <div>Win Results</div>
+        </div>
+        <div class="card-body p-2">
+            @if (wins != null)
+            {
+                <div class="row">
+                    <div class="col-md-4">Matched: @wins.PredictedLessThanOne</div>
+                </div>
+                <table class="table table-striped table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Team Id</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Wins</th>
+                            <th scope="col">Predicted</th>
+                            <th scope="col">Losses</th>
+                            <th scope="col">Predicted</th>
+                            <th scope="col">Tossups</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var win in wins.TeamWins)
+                        {
+                            <tr>
+                                <td>@win.TeamId</td>
+                                <td>@win.TeamName</td>
+                                <td>@win.Wins</td>
+                                <td>@win.PredictedWins</td>
+                                <td>@win.Losses</td>
+                                <td>@win.PredictedLosses</td>
+                                <td>@win.PredictedTossups</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+}
+@code {
+    public YearlyWinResponseModel? wins;
+    private bool showBets = false;
+    private int year;
+    private int week;
+    private bool wonBet = false;
+    private bool onlyQualified = true;
+    private bool ranCommand;
+    private bool runningCommand;
+
+    public async Task GetWins()
+    {
+        runningCommand = true;
+        wins = await yearlyWinService.SearchYearlyWinAsync(year);
+        showBets = true;
+        runningCommand = false;
+        ranCommand = true;
+        StateHasChanged();
+    }
+}

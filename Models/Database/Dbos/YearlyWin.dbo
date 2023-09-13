@@ -1,0 +1,12 @@
+CREATE TABLE [dbo].[YearlyWin]
+(
+	[YearlyWinId] BIGINT NOT NULL CONSTRAINT Pk_YearlyWinId PRIMARY KEY IDENTITY(10000,1),
+    [AwayTeamId] BIGINT NOT NULL,
+    [HomeTeamId] BIGINT NOT NULL,
+    [AwayTeamWin] FLOAT NOT NULL,
+    [HomeTeamWin] FLOAT NOT NULL,
+    [Year] INT NOT NULL
+)
+GO
+CREATE NONCLUSTERED INDEX [Ix_YearlyWin_Search] ON [dbo].[YearlyWin] ([AwayTeamId], [HomeTeamId], [Year]);
+GO

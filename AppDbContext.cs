@@ -35,6 +35,7 @@ namespace CollegeScorePredictor
         public DbSet<ScorePredictionConferenceDbo> ScorePredictionConference { get; set; }
         public DbSet<CombinedBetDbo> CombinedBet { get; set; }
         public DbSet<CombinedBetHistoryDbo> CombinedBetHistory { get; set; }
+        public DbSet<YearlyWinDbo> YearlyWin { get; set; }
 
 
 
@@ -63,6 +64,7 @@ namespace CollegeScorePredictor
             modelBuilder.Entity<ScorePredictionConferenceDbo>().ToTable("ScorePredictionConference").HasKey("ScorePredictionConferenceId");
             modelBuilder.Entity<CombinedBetDbo>().ToTable("CombinedBet").HasKey("CombinedBetId");
             modelBuilder.Entity<CombinedBetHistoryDbo>().ToTable("CombinedBetHistory").HasKey("CombinedBetId");
+            modelBuilder.Entity<YearlyWinDbo>().ToTable("YearlyWin").HasKey("YearlyWinId");
         }
     }
 }

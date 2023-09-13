@@ -74,8 +74,8 @@ namespace CollegeScorePredictor.Services
             //var weeks = DateOperations.Get2020StartDateList();
             //still need to run 2021 and 2022, just don't make OffensiveModels out of them
             //var weeks = DateOperations.Get2021StartDateList();
-            var weeks = DateOperations.Get2022StartDateList();
-            // var weeks = DateOperations.Get2023StartDateList();
+            //var weeks = DateOperations.Get2022StartDateList();
+            var weeks = DateOperations.Get2023StartDateList();
 
             foreach (var week in weeks)
             {
