@@ -417,6 +417,136 @@ namespace CollegeScorePredictor.Operations
             return model;
         }
 
+        public static GetGameLeadersModel GetLeadersModel(EspnGameSummaryLeadersModel leaders, long homeTeamId, long awayTeamId)
+        {
+            var response = new GetGameLeadersModel();
+            foreach(var team in leaders.leaders)
+            {
+                var teamId = long.Parse(team.team?.id!);
+                var isHomeTeam = teamId == homeTeamId;
+
+                var passingLeader = team.leaders.FirstOrDefault(x => x.name == "passingYards");
+                var rushingLeader = team.leaders.FirstOrDefault(x => x.name == "rushingYards");
+                var receivingLeader = team.leaders.FirstOrDefault(x => x.name == "receivingYards");
+
+                if (passingLeader != null)
+                {
+                    var passLeader = passingLeader.leaders.First();
+                    var passStringModel = ParseLeaderString(passLeader.displayValue!);
+                    var athlete = passLeader.athlete;
+                    var playerId = long.Parse(athlete?.id!);
+
+                    if (isHomeTeam)
+                    {
+                        response.HomePassingPlayer = playerId;
+                        response.HomePassingYards = passStringModel.Yards;
+                        response.HomePassingAttempts = passStringModel.Attempts;
+                        response.HomePassingCompletions = passStringModel.Completions;
+                        response.HomePassingTouchdowns = passStringModel.Touchdowns;
+                        response.HomePassingInterceptions = passStringModel.Interceptions;
+                    }
+                    else
+                    {
+                        response.AwayPassingPlayer = playerId;
+                        response.AwayPassingYards = passStringModel.Yards;
+                        response.AwayPassingAttempts = passStringModel.Attempts;
+                        response.AwayPassingCompletions = passStringModel.Completions;
+                        response.AwayPassingTouchdowns = passStringModel.Touchdowns;
+                        response.AwayPassingInterceptions = passStringModel.Interceptions;
+                    }
+                }
+
+                if (rushingLeader != null)
+                {
+                    var rushLeader = rushingLeader.leaders.First();
+                    var rushStringModel = ParseLeaderString(rushLeader.displayValue!);
+                    var athlete = rushLeader.athlete;
+                    var playerId = long.Parse(athlete?.id!);
+                    var position = athlete?.position?.abbreviation;
+
+                    if (isHomeTeam)
+                    {
+                        response.HomeRushingPlayer = playerId;
+                        response.HomeRushingYards = rushStringModel.Yards;
+                        response.HomeRushingAttempts = rushStringModel.Attempts;
+                        response.HomeRushingTouchdowns = rushStringModel.Touchdowns;
+                        response.HomeRushingIsQuarterback = position == "QB";
+                    }
+                    else
+                    {
+                        response.AwayRushingPlayer = playerId;
+                        response.AwayRushingYards = rushStringModel.Yards;
+                        response.AwayRushingAttempts = rushStringModel.Attempts;
+                        response.AwayRushingTouchdowns = rushStringModel.Touchdowns;
+                        response.AwayRushingIsQuarterback = position == "QB";
+                    }
+                }
+
+                if (receivingLeader != null)
+                {
+                    var receptionLeader = receivingLeader.leaders.First();
+                    var receptionStringModel = ParseLeaderString(receptionLeader.displayValue!);
+                    var athlete = receptionLeader.athlete;
+                    var playerId = long.Parse(athlete?.id!);
+                    var position = athlete?.position?.abbreviation;
+
+                    if (isHomeTeam)
+                    {
+                        response.HomeReceivingPlayer = playerId;
+                        response.HomeReceivingYards = receptionStringModel.Yards;
+                        response.HomeReceivingAttempts = receptionStringModel.Attempts;
+                        response.HomeReceivingTouchdowns = receptionStringModel.Touchdowns;
+                        response.HomeReceivingIsTightEnd = position == "TE";
+                    }               
+                    else            
+                    {               
+                        response.AwayReceivingPlayer = playerId;
+                        response.AwayReceivingYards = receptionStringModel.Yards;
+                        response.AwayReceivingAttempts = receptionStringModel.Attempts;
+                        response.AwayReceivingTouchdowns = receptionStringModel.Touchdowns;
+                        response.AwayReceivingIsTightEnd = position == "TE";
+                    }
+                }
+            }
+            return response;
+        }
+
+        private static LeaderStringModel ParseLeaderString(string leaderString)
+        {
+            var value = leaderString.Split(", ");
+            var yards = int.Parse(value.Where(x => x.Contains("YDS")).Any() ? value.Where(x => x.Contains("YDS")).First() : "0");
+            var attemptsCompletions = value.Where(x => x.Contains("-")).FirstOrDefault();
+            var attempts = 0;
+            var completions = 0;
+            if(attemptsCompletions != null)
+            {
+                var numbers = attemptsCompletions.Split("-");
+                attempts = int.Parse(numbers[0]);
+                completions = int.Parse(numbers[1]);
+            }
+            var touchdowns = int.Parse(value.Where(x => x.Contains("TD")).Any() ? value.Where(x=>x.Contains("TD")).First() : "0");
+            var interceptions = int.Parse(value.Where(x => x.Contains("INT")).Any() ? value.Where(x=>x.Contains("INT")).First() : "0");
+            var carries = int.Parse(value.Where(x => x.Contains("CAR")).Any() ? value.Where(x => x.Contains("CAR")).First() : "0");
+            if(attempts == 0 && carries > 0)
+            {
+                attempts = carries;
+            }
+            var receptions = int.Parse(value.Where(x => x.Contains("REC")).Any() ? value.Where(x => x.Contains("REC")).First() : "0");
+            if(attempts == 0 && receptions > 0)
+            {
+                attempts = receptions;
+            }
+
+            return new LeaderStringModel
+            {
+                Yards = yards,
+                Attempts = attempts,
+                Completions = completions,
+                Touchdowns = touchdowns,
+                Interceptions = interceptions
+            };
+        }
+
         private static double GetStatisticPercentage(string stat)
         {
             var numbers = stat.Split("-");
@@ -455,15 +585,25 @@ namespace CollegeScorePredictor.Operations
             return Math.Round((double)minutes + secondPercentage, 2);
         }
 
-        private static bool IsGameModelValid(EspnGameSummaryModel model)
+        public static bool IsGameModelValid(EspnGameSummaryModel model)
         {
             if (model == null) return false;
             if (model.header.competitions.FirstOrDefault() == null) return false;
             if (model.header.competitions.First().boxscoreAvailable == false) return false;
             if (model.boxscore.teams.FirstOrDefault() == null) return false;
             if (model.scoringPlays.FirstOrDefault() == null) return false;
+            if (model.leaders != null && model.leaders.leaders.FirstOrDefault() == null) return false;
             if (model.boxscore.teams.First().statistics.Count == 0) return false;
             return true;
+        }
+
+        private class LeaderStringModel
+        {
+            public int Yards { get; set; }
+            public int Attempts { get; set; }
+            public int Completions { get; set; }
+            public int Touchdowns { get; set; }
+            public int Interceptions { get; set; }
         }
     }
 }

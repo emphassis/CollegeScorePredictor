@@ -1,0 +1,16 @@
+﻿<div class="card">
+    <div class="card-header">
+        Game Leaders
+    </div>
+    <div class="card-body">
+        <label>Generate All Game Leaders</label>
+        <button type="button" @onclick="@(async()=>{await GenerateAllGameLeaders();})">Generate</button>
+    </div>
+</div>
+@code {
+
+    public async Task GenerateAllGameLeaders()
+    {
+        await gameLeaderService.GenerateAllGameLeaders();
+    }
+}

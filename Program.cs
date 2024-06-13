@@ -38,6 +38,7 @@ builder.Services.AddSingleton<BetHistoryCombinedService>();
 builder.Services.AddSingleton<BothWinHistoryService>();
 builder.Services.AddSingleton<YearlyWinService>();
 builder.Services.AddSingleton<BetSlipService>();
+builder.Services.AddSingleton<GameLeaderService>();
 
 var app = builder.Build();
 

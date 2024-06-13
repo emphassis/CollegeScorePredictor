@@ -1,5 +1,4 @@
 ﻿using CollegeScorePredictor.AIModels.OffensivePrediction.Models;
-using CollegeScorePredictor.AIModels.OverPrediction.Database;
 using CollegeScorePredictor.Models.Database;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;

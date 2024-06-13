@@ -60,6 +60,9 @@
          <div class="col">
             <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.GenerateBetSlip))">Generate Bet Slip</button>
         </div>
+        <div class="col">
+            <button type="button" class="btn btn-primary" @onclick="@(()=> TogglePage(Page.GenerateGameLeaders))">Generate All Game Leaders</button>
+        </div>
     </div>
 </div>
 
@@ -123,6 +126,10 @@
 {
     <CollegeScorePredictor.Pages.Bet.BetSlipGenerator></CollegeScorePredictor.Pages.Bet.BetSlipGenerator>
 }
+@if (pages.Any(x => x == Page.GenerateGameLeaders))
+{
+    <CollegeScorePredictor.Pages.Game.GameLeaders></CollegeScorePredictor.Pages.Game.GameLeaders>
+}
 
 
 @code{
@@ -144,7 +151,8 @@
         BothBetHistory,
         CreateWins,
         GetWins,
-        GenerateBetSlip
+        GenerateBetSlip,
+        GenerateGameLeaders
     }
 
     private async Task TestMethod()
