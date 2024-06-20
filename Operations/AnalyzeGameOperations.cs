@@ -417,10 +417,10 @@ namespace CollegeScorePredictor.Operations
             return model;
         }
 
-        public static GetGameLeadersModel GetLeadersModel(EspnGameSummaryLeadersModel leaders, long homeTeamId, long awayTeamId)
+        public static GetGameLeadersModel GetLeadersModel(List<GameSummaryLeadersModel> leaders, long homeTeamId, long awayTeamId)
         {
             var response = new GetGameLeadersModel();
-            foreach(var team in leaders.leaders)
+            foreach(var team in leaders)
             {
                 var teamId = long.Parse(team.team?.id!);
                 var isHomeTeam = teamId == homeTeamId;
@@ -514,7 +514,8 @@ namespace CollegeScorePredictor.Operations
         private static LeaderStringModel ParseLeaderString(string leaderString)
         {
             var value = leaderString.Split(", ");
-            var yards = int.Parse(value.Where(x => x.Contains("YDS")).Any() ? value.Where(x => x.Contains("YDS")).First() : "0");
+            var yardString = value.Where(x => x.Contains("YDS")).Any() ? value.Where(x => x.Contains("YDS")).First() : "0";
+            var yards = int.Parse(yardString.Contains("YDS") ? new string(yardString.Where(c => char.IsDigit(c)).ToArray()) : yardString);
             var attemptsCompletions = value.Where(x => x.Contains("-")).FirstOrDefault();
             var attempts = 0;
             var completions = 0;
@@ -524,14 +525,23 @@ namespace CollegeScorePredictor.Operations
                 attempts = int.Parse(numbers[0]);
                 completions = int.Parse(numbers[1]);
             }
-            var touchdowns = int.Parse(value.Where(x => x.Contains("TD")).Any() ? value.Where(x=>x.Contains("TD")).First() : "0");
-            var interceptions = int.Parse(value.Where(x => x.Contains("INT")).Any() ? value.Where(x=>x.Contains("INT")).First() : "0");
-            var carries = int.Parse(value.Where(x => x.Contains("CAR")).Any() ? value.Where(x => x.Contains("CAR")).First() : "0");
+            
+            var touchdownString = value.Where(x => x.Contains("TD")).Any() ? value.Where(x=>x.Contains("TD")).First() : "0";
+            var touchdowns = int.Parse(touchdownString.Contains("TD") ? new string(touchdownString.Where(t => char.IsDigit(t)).ToArray()) : touchdownString);
+            
+            var interceptionString = value.Where(x => x.Contains("INT")).Any() ? value.Where(x=>x.Contains("INT")).First() : "0";
+            var interceptions = int.Parse(interceptionString.Contains("INT") ? new string(interceptionString.Where(i => char.IsDigit(i)).ToArray()) : interceptionString);
+            
+            var carryString = value.Where(x => x.Contains("CAR")).Any() ? value.Where(x => x.Contains("CAR")).First() : "0";
+            var carries = int.Parse(carryString.Contains("CAR") ? new string(carryString.Where(c => char.IsDigit(c)).ToArray()) : carryString);
+
             if(attempts == 0 && carries > 0)
             {
                 attempts = carries;
             }
-            var receptions = int.Parse(value.Where(x => x.Contains("REC")).Any() ? value.Where(x => x.Contains("REC")).First() : "0");
+            var receptionString = value.Where(x => x.Contains("REC")).Any() ? value.Where(x => x.Contains("REC")).First() : "0";
+            var receptions = int.Parse(receptionString.Contains("REC") ? new string(receptionString.Where(r => char.IsDigit(r)).ToArray()) : receptionString);
+
             if(attempts == 0 && receptions > 0)
             {
                 attempts = receptions;
@@ -592,7 +602,7 @@ namespace CollegeScorePredictor.Operations
             if (model.header.competitions.First().boxscoreAvailable == false) return false;
             if (model.boxscore.teams.FirstOrDefault() == null) return false;
             if (model.scoringPlays.FirstOrDefault() == null) return false;
-            if (model.leaders != null && model.leaders.leaders.FirstOrDefault() == null) return false;
+            if (model.leaders != null && model.leaders.FirstOrDefault() == null) return false;
             if (model.boxscore.teams.First().statistics.Count == 0) return false;
             return true;
         }

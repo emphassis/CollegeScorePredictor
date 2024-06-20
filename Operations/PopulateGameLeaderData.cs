@@ -15,9 +15,7 @@ namespace CollegeScorePredictor.Operations
                 var apiUrl = Constants.System.EspnBaseUrl + Constants.System.EspnGameSummaryApi + eventId;
                 var data = await client.GetStringAsync(apiUrl);
 
-
-                //JsonSerializerOptions options = new() { WriteIndented = true, UnknownTypeHandling = System.Text.Json.Serialization.JsonUnknownTypeHandling.JsonElement, NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString, DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
-                EspnGameSummaryModel model = JsonSerializer.Deserialize<EspnGameSummaryModel>(data)!;//, options)!;
+                EspnGameSummaryModel model = JsonSerializer.Deserialize<EspnGameSummaryModel>(data)!;
 
                 var isModelValid = AnalyzeGameOperations.IsGameModelValid(model!);
                 if (!isModelValid)

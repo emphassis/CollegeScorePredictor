@@ -1,10 +1,6 @@
 ﻿namespace CollegeScorePredictor.Models.EspnGameSummary
 {
 #pragma warning disable IDE1006 // Naming Styles
-    public class EspnGameSummaryLeadersModel
-    {
-        public List<GameSummaryLeadersModel> leaders { get; set; } = new ();
-    }
 
     public class GameSummaryLeadersModel
     {

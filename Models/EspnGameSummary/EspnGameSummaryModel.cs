@@ -11,7 +11,7 @@
         public object? format { get; set; }
         public object? gameInfo { get; set; }
         public Header header { get; set; } = new Header();
-        public EspnGameSummaryLeadersModel leaders { get; set; } = new EspnGameSummaryLeadersModel();
+        public List<GameSummaryLeadersModel> leaders { get; set; } = new List<GameSummaryLeadersModel>();
         public object? news { get; set; }
         public object? odds { get; set; }
         public object? pickcenter { get; set; }
