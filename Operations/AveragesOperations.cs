@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Data;
 using Microsoft.EntityFrameworkCore;
+using CollegeScorePredictor.Models.Grade;
 
 namespace CollegeScorePredictor.Operations
 {
@@ -28,12 +29,24 @@ namespace CollegeScorePredictor.Operations
         public static double PlayerAverageReceivingYards { get; set; }
         public static double PlayerAverageReceivingAttempts { get; set; }
         public static double PlayerAverageReceivingTouchdowns { get; set; }
+        public static double ConferenceAACWinAverage { get; set; }
+        public static double ConferenceACCWinAverage { get; set; }
+        public static double ConferenceBig12WinAverage { get; set; }
+        public static double ConferenceBig10WinAverage { get; set; }
+        public static double ConferenceUSAWinAverage { get; set; }
+        public static double ConferenceIndependentWinAverage { get; set; }
+        public static double ConferenceMACWinAverage { get; set; }
+        public static double ConferenceMountainWestWinAverage { get; set; }
+        public static double ConferencePac12WinAverage { get; set; }
+        public static double ConferenceSECWinAverage { get; set; }
+        public static double ConferenceSunBeltWinAverage { get; set; }
         private static bool AveragesPopulated = false;
 
-        public static async Task PopulateAverages(AppDbContext db)
+        public static async Task PopulateAverages(AppDbContext db, int year)
         {
             if (AveragesPopulated) return;
             var playerAverages = await db.GameLeader
+                .Where(x => x.Year == year)
                 .GroupBy(x => true)
                 .Select(g => new LeaderDataModel
                 {
@@ -51,6 +64,7 @@ namespace CollegeScorePredictor.Operations
                 }).FirstAsync();
 
             var teamAverages = await db.GameResult
+                .Where(x => x.Year == year)
                 .GroupBy(x => true)
                 .Select(g => new LeaderDataModel
                 {
@@ -95,19 +109,98 @@ namespace CollegeScorePredictor.Operations
             Console.WriteLine("Averages Populated");
         }
 
-        private class LeaderDataModel
+        public static double GetConferenceWinAverage(int conference)
         {
-            public double PassingYards { get; set; }
-            public double PassingAttempts { get; set; }
-            public double PassingCompletions { get; set; }
-            public double PassingTouchdowns { get; set; }
-            public double PassingInterceptions { get; set; }
-            public double RushingYards { get; set; }
-            public double RushingAttempts { get; set; }
-            public double RushingTouchdowns { get; set; }
-            public double ReceivingYards { get; set; }
-            public double ReceivingAttempts { get; set; }
-            public double ReceivingTouchdowns { get; set; }
+            switch (conference)
+            {
+                case 0:
+                    return ConferenceAACWinAverage;
+                case 1:
+                    return ConferenceACCWinAverage;
+                case 2:
+                    return ConferenceBig12WinAverage;
+                case 3:
+                    return ConferenceBig10WinAverage;
+                case 4:
+                    return ConferenceUSAWinAverage;
+                case 5:
+                    return ConferenceIndependentWinAverage;
+                case 6:
+                    return ConferenceMACWinAverage;
+                case 7:
+                    return ConferenceMountainWestWinAverage;
+                case 8:
+                    return ConferencePac12WinAverage;
+                case 9:
+                    return ConferenceSECWinAverage;
+                case 10:
+                    return ConferenceSunBeltWinAverage;
+                default:
+                    return 0;
+            }
+        }
+
+        private static async Task PopulateConferenceWins(AppDbContext db, int year)
+        {
+            for (var i = 0; i < 11; i++)
+            {
+                var conferenceGames = await (from e in db.GameResult
+                                             where e.HomeTeamConference == i || e.AwayTeamConference == i
+                                             && e.Year == year
+                                             select new
+                                             {
+                                                 e.HomeTeamConference,
+                                                 e.HomeTeamWon,
+                                                 e.AwayTeamConference
+                                             }).ToListAsync();
+
+                var totalGames = conferenceGames.Where(x => x.HomeTeamConference == i).Count() + conferenceGames.Where(x => x.AwayTeamConference == i).Count();
+                var wins = conferenceGames.Where(x => x.HomeTeamConference == i && x.HomeTeamWon).Count() + conferenceGames.Where(x => x.AwayTeamConference == i && !x.HomeTeamWon).Count();
+
+                if (wins == 0 || totalGames == 0)
+                {
+                    continue;
+                }
+                else
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            ConferenceAACWinAverage = wins / totalGames;
+                            break;
+                        case 1:
+                            ConferenceACCWinAverage = wins / totalGames;
+                            break;
+                        case 2:
+                            ConferenceBig12WinAverage = wins / totalGames;
+                            break;
+                        case 3:
+                            ConferenceBig10WinAverage = wins / totalGames;
+                            break;
+                        case 4:
+                            ConferenceUSAWinAverage = wins / totalGames;
+                            break;
+                        case 5:
+                            ConferenceIndependentWinAverage = wins / totalGames;
+                            break;
+                        case 6:
+                            ConferenceMACWinAverage = wins / totalGames;
+                            break;
+                        case 7:
+                            ConferenceMountainWestWinAverage = wins / totalGames;
+                            break;
+                        case 8:
+                            ConferencePac12WinAverage = wins / totalGames;
+                            break;
+                        case 9:
+                            ConferenceSECWinAverage = wins / totalGames;
+                            break;
+                        case 10:
+                            ConferenceSunBeltWinAverage = wins / totalGames;
+                            break;
+                    }
+                }
+            }
         }
     }
 }

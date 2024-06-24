@@ -18,6 +18,7 @@ namespace CollegeScorePredictor
         public DbSet<BetHistoryDbo> BetHistory { get; set; }
         public DbSet<GameLeaderDbo> GameLeader { get; set; }
         public DbSet<GamePredictionDbo> GamePrediction { get; set; }
+        public DbSet<GradeModelDbo> GradeModel { get; set; }
         public DbSet<ScorePredictionDbo> ScorePrediction { get; set; }
         public DbSet<BetConferenceDbo> BetConference { get; set; }
         public DbSet<BetHistoryConferenceDbo> BetHistoryConference { get; set; }
@@ -38,6 +39,7 @@ namespace CollegeScorePredictor
             modelBuilder.Entity<BetHistoryDbo>().ToTable("BetHistory").HasKey("BetId");
             modelBuilder.Entity<GameLeaderDbo>().ToTable("GameLeader").HasKey("GameLeaderId");
             modelBuilder.Entity<GamePredictionDbo>().ToTable("GamePrediction").HasKey("GamePredictionId");
+            modelBuilder.Entity<GradeModelDbo>().ToTable("GradeModel").HasKey("GradeModelId");
             modelBuilder.Entity<ScorePredictionDbo>().ToTable("ScorePrediction").HasKey("ScorePredictionId");
             modelBuilder.Entity<BetConferenceDbo>().ToTable("BetConference").HasKey("BetConferenceId");
             modelBuilder.Entity<BetHistoryConferenceDbo>().ToTable("BetHistoryConference").HasKey("BetConferenceId");
